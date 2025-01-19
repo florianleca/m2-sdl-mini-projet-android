@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Mini Projet</string>
     <string name="restau_img_desc">restau img</string>
+    <string name="restaurant_image">Restaurant main image</string>
+    <string name="reserver">Réserver</string>
+    <string name="avis">Avis</string>
+    <string name="laisser_avis">Laisser un avis</string>
 </resources>
