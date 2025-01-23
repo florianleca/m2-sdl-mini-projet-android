@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MiniProjet"
         tools:targetApi="31">
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".restaurant.RestaurantActivity"
-            android:parentActivityName=".home.HomeActivity" />
+            android:parentActivityName=".HomeActivity" />
     </application>
 
 </manifest>
