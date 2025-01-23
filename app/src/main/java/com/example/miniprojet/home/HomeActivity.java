@@ -1,5 +1,6 @@
 package com.example.miniprojet.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.miniprojet.R;
 import com.example.miniprojet.FetchState;
 import com.example.miniprojet.restaurant.Restaurant;
+import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.example.miniprojet.restaurant.RestaurantService;
 import com.squareup.picasso.Picasso;
 
@@ -68,6 +70,13 @@ public class HomeActivity extends AppCompatActivity {
 
             ratingBar.setRating(restaurant.getRating());
             descriptionView.setText(restaurant.getDescription());
+
+            // Click listener to restaurant detailed page
+            view.setOnClickListener(v -> {
+                Intent intent = new Intent(this, RestaurantActivity.class);
+                intent.putExtra("restaurant", restaurant);
+                startActivity(intent);
+            });
 
             restaurantsContent.addView(view);
         }

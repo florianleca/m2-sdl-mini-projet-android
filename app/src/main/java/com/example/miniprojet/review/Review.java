@@ -3,33 +3,18 @@ package com.example.miniprojet.review;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Review {
 
-    private final float stars;
-    private final String content;
-    private final Date date;
-    private final List<String> imagesUrl;
+    private String restaurantName;
+    private String userName;
+    private float stars;
+    private String content;
+    private Date date;
+    private List<String> imagesUrl;
 
-    public Review(float stars, String content, Date date, List<String> imagesUrl) {
-        this.stars = stars;
-        this.content = content;
-        this.date = date;
-        this.imagesUrl = imagesUrl;
-    }
-
-    public float getStars() {
-        return stars;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public List<String> getImagesUrl() {
-        return imagesUrl;
-    }
 }

@@ -19,7 +19,7 @@ activity = { group = "androidx.activity", name = "activity", version.ref = "acti
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
 picasso = { group = "com.squareup.picasso", name = "picasso", version = "2.71828" }
-
+lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.36" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

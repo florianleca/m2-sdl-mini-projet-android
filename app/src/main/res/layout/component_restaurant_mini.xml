@@ -4,7 +4,7 @@
                                                    android:layout_height="300dp"
                                                    android:padding="8dp"
                                                    android:id="@+id/restau_mini"
-                                                   android:background="@drawable/ic_restau_mini_comp"
+                                                   android:background="@drawable/ic_mini_comp"
                                                    android:elevation="4dp"
                                                    android:layout_margin="5dp">
 
@@ -31,7 +31,7 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="2">
 
             <LinearLayout
                     android:id="@+id/name_stars"
