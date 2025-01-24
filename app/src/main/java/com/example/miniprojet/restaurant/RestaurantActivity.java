@@ -22,12 +22,15 @@ import com.example.miniprojet.review.Review;
 import com.example.miniprojet.review.ReviewService;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class RestaurantActivity extends AppCompatActivity {
 
     private static final String TAG = RestaurantActivity.class.getSimpleName();
+    private final SimpleDateFormat reviewDateFormatter = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
     private Restaurant restaurant;
 
     @Override
@@ -71,23 +74,38 @@ public class RestaurantActivity extends AppCompatActivity {
         for (Review review : reviews) {
             View view = inflater.inflate(R.layout.component_review_mini, reviewsContent, false);
 
-            ImageView imageView = view.findViewById(R.id.imageView);
             TextView userNameView = view.findViewById(R.id.user_name);
             RatingBar ratingBar = view.findViewById(R.id.rating_bar);
             TextView reviewContentView = view.findViewById(R.id.review_content);
             TextView dateView = view.findViewById(R.id.date);
 
-            // TODO: Only displays the 1st picture for now
-            Picasso.get().load(review.getImagesUrl().get(0)).into(imageView);
-            imageView.setContentDescription(String.format("Photo of %s by %s", review.getRestaurantName(), review.getUserName()));
-
+            loadReviewImages(view, review);
             userNameView.setText(review.getUserName());
             ratingBar.setRating(review.getStars());
             reviewContentView.setText(review.getContent());
-            dateView.setText(review.getDate().toString());
+            dateView.setText(reviewDateFormatter.format(review.getDate()));
 
             reviewsContent.addView(view);
         }
+    }
+
+    private void loadReviewImages(View view, Review review) {
+        for (String url : review.getImagesUrl()) {
+            ImageView imageView = new ImageView(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 100);
+            params.setMargins(8, 8, 8, 8); // Margins between images
+            imageView.setLayoutParams(params);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            Picasso.get()
+                    .load(url)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(imageView);
+
+            LinearLayout imageRow = view.findViewById(R.id.image_row);
+            imageRow.addView(imageView);
+        }
+
     }
 
 }
