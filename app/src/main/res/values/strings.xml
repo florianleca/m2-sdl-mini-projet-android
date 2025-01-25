@@ -5,4 +5,12 @@
     <string name="reserver">Réserver</string>
     <string name="avis">Avis</string>
     <string name="laisser_avis">Laisser un avis</string>
+    <string name="prenom">Prénom</string>
+    <string name="john">John</string>
+    <string name="adresse_mail">Adresse mail</string>
+    <string name="johnmail">john.doe@gmail.com</string>
+    <string name="quel_jour">Quel jour ?</string>
+    <string name="a_quelle_heure">À quelle heure ?</string>
+    <string name="pour_combien_de_personnes">Pour combien de personnes ?</string>
+    <string name="colon">:</string>
 </resources>

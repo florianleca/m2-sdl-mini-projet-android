@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.miniprojet.FetchState;
 import com.example.miniprojet.R;
+import com.example.miniprojet.reservation.ReservationPopUpBuilder;
 import com.example.miniprojet.review.Review;
 import com.example.miniprojet.review.ReviewService;
 import com.squareup.picasso.Picasso;
@@ -38,10 +39,9 @@ public class RestaurantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_restaurant_page);
-
         restaurant = (Restaurant) getIntent().getSerializableExtra("restaurant");
-
         initToolbar();
+        ReservationPopUpBuilder.initReservationPopUp(this, restaurant);
         fetchReviews(new ReviewService(this));
     }
 
@@ -105,7 +105,6 @@ public class RestaurantActivity extends AppCompatActivity {
             LinearLayout imageRow = view.findViewById(R.id.image_row);
             imageRow.addView(imageView);
         }
-
     }
 
 }
