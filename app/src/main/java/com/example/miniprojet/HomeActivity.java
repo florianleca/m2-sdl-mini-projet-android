@@ -1,4 +1,6 @@
-package com.example.miniprojet.home;
+package com.example.miniprojet;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,18 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.miniprojet.R;
-import com.example.miniprojet.FetchState;
 import com.example.miniprojet.restaurant.Restaurant;
 import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.example.miniprojet.restaurant.RestaurantService;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static android.widget.Toast.LENGTH_SHORT;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -64,10 +63,13 @@ public class HomeActivity extends AppCompatActivity {
             RatingBar ratingBar = view.findViewById(R.id.rating_bar);
             TextView descriptionView = view.findViewById(R.id.restau_desc);
 
-            Picasso.get().load(restaurant.getImageUrl()).into(imageView);
+            Picasso.get()
+                    .load(restaurant.getImageUrl())
+                    .error(R.drawable.ic_launcher_background)
+                    .into(imageView);
             imageView.setContentDescription(String.format("%s img", restaurant.getName()));
-            nameView.setText(restaurant.getName());
 
+            nameView.setText(restaurant.getName());
             ratingBar.setRating(restaurant.getRating());
             descriptionView.setText(restaurant.getDescription());
 
