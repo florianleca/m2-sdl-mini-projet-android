@@ -1,6 +1,5 @@
 package com.example.miniprojet.review;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -11,8 +10,12 @@ import com.example.miniprojet.R;
 import com.example.miniprojet.FetchState;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,34 +23,40 @@ import java.util.concurrent.Executors;
 public class ReviewService {
 
     private static final String TAG = ReviewService.class.getSimpleName();
-    private final AppCompatActivity activity;
     private final ExecutorService executorService;
     private final Handler mainHandler;
+    private final FirebaseFirestore dataSource;
 
-    public ReviewService(AppCompatActivity activity) {
-        this.activity = activity;
+    public ReviewService(FirebaseFirestore dataSource) {
+        this.dataSource = dataSource;
         this.executorService = Executors.newSingleThreadExecutor();
         this.mainHandler = new Handler(Looper.getMainLooper());
     }
 
-    public void fetchReviews(FetchState<Review> state) {
-        Log.d(TAG, "started fetching reviews");
-        executorService.execute(() -> {
-            Log.d(TAG, "fetching restaurants in background...");
-            ObjectMapper om = new ObjectMapper();
-            try (InputStream is = activity.getResources().openRawResource(R.raw.reviews)) {
-                List<Review> reviews = om.readValue(is, new TypeReference<>() {
-                });
-                Log.d(TAG, "Background task completed, reviews loaded");
-                mainHandler.post(() -> {
-                    Log.d(TAG, "Posting results to main thread");
-                    state.onSuccess(reviews);
-                });
-            } catch (Exception e) {
-                Log.e(TAG, "Error occurred while fetching reviews", e);
-                mainHandler.post(() -> state.onError(e));
-            }
-        });
+    public void fetchByRestaurant(String restaurantId, FetchState<Review> state) {
+        Log.d(TAG, "Fetching reviews for restaurantId: " + restaurantId);
+
+        executorService.execute(() ->
+                dataSource.collection("reviews")
+                        .whereEqualTo("restaurantId", restaurantId)
+                        .get()
+                        .addOnSuccessListener(querySnapshot -> {
+                            List<Review> reviews = new ArrayList<>();
+                            for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                                Review review = doc.toObject(Review.class);
+                                if (review != null) {
+                                    review.setId(doc.getId()); // set the id of the review, Firebase not setting it automatically
+                                    reviews.add(review);
+                                }
+                            }
+                            Log.d(TAG, "Reviews loaded successfully");
+                            mainHandler.post(() -> state.onSuccess(reviews));
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "Error occurred while fetching reviews", e);
+                            mainHandler.post(() -> state.onError(e));
+                        })
+        );
     }
 
 }

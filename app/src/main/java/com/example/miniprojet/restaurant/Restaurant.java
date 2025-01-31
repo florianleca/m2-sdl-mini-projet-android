@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Restaurant implements Serializable {
-
+    private String id;
     private String name;
     private String description;
     private String imageUrl;

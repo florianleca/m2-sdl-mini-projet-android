@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.miniprojet.restaurant.Restaurant;
 import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.example.miniprojet.restaurant.RestaurantService;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,11 +36,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         restaurantsContent = findViewById(R.id.restaurantsContent);
 
-        fetchAndPushRestaurantsInView(new RestaurantService(this));
+        FirebaseApp.initializeApp(this);
+        fetchAndPushRestaurantsInView(new RestaurantService(FirebaseFirestore.getInstance()));
     }
 
     private void fetchAndPushRestaurantsInView(RestaurantService service) {
-        service.fetchRestaurants(new FetchState<>() {
+        service.fetch(new FetchState<>() {
             @Override
             public void onSuccess(List<Restaurant> restaurants) {
                 Log.d(TAG, "Restaurants loaded successfully, count: " + restaurants.size());

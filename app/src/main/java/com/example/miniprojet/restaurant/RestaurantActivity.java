@@ -21,6 +21,7 @@ import com.example.miniprojet.R;
 import com.example.miniprojet.reservation.ReservationPopUpBuilder;
 import com.example.miniprojet.review.Review;
 import com.example.miniprojet.review.ReviewService;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -41,8 +42,17 @@ public class RestaurantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant_page);
         restaurant = (Restaurant) getIntent().getSerializableExtra("restaurant");
         initToolbar();
+        addRestaurantImg();
         ReservationPopUpBuilder.initReservationPopUp(this, restaurant);
-        fetchReviews(new ReviewService(this));
+        fetchReviews(new ReviewService(FirebaseFirestore.getInstance()));
+    }
+
+    private void addRestaurantImg() {
+        ImageView restaurantImg = findViewById(R.id.restaurantImage);
+        Picasso.get()
+                .load(restaurant.getImageUrl())
+                .error(R.drawable.ic_launcher_background)
+                .into(restaurantImg);
     }
 
     private void initToolbar() {
@@ -53,7 +63,7 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void fetchReviews(ReviewService service) {
-        service.fetchReviews(new FetchState<>() {
+        service.fetchByRestaurant(restaurant.getId(),new FetchState<>() {
             @Override
             public void onSuccess(List<Review> reviews) {
                 Log.d(TAG, "Reviews loaded successfully, count: " + reviews.size());
