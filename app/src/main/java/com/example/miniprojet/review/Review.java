@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Review {
-
-    private String restaurantName;
+    private String id;
+    private String restaurantId;
     private String userName;
     private float stars;
     private String content;

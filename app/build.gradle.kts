@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -45,4 +46,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.analytics)
 }
