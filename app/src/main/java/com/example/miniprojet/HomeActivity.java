@@ -15,9 +15,11 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.miniprojet.maps.MapsActivity;
 import com.example.miniprojet.restaurant.Restaurant;
 import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.example.miniprojet.restaurant.RestaurantService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -33,7 +35,11 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
         restaurantsContent = findViewById(R.id.restaurantsContent);
-
+        FloatingActionButton fabMaps = findViewById(R.id.fab_maps);
+        fabMaps.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
+            startActivity(intent);
+        });
         fetchAndPushRestaurantsInView(new RestaurantService(this));
     }
 

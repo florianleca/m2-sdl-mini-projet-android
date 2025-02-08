@@ -18,22 +18,40 @@
             app:titleTextColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <ScrollView
-            android:id="@+id/bodyScroll"
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@id/tool_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-                android:id="@+id/restaurantsContent"
+        <ScrollView
+                android:id="@+id/bodyScroll"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
+
+            <LinearLayout
+                    android:id="@+id/restaurantsContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"/>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_maps"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"/>
-    </ScrollView>
+                android:src="@drawable/ic_map"
+                android:contentDescription="@string/open_maps"
+                app:backgroundTint="@color/app_main"
+                app:tint="@android:color/white"
+                app:maxImageSize="60dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="50dp"/>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

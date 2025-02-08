@@ -13,4 +13,6 @@
     <string name="a_quelle_heure">À quelle heure ?</string>
     <string name="pour_combien_de_personnes">Pour combien de personnes ?</string>
     <string name="colon">:</string>
+    <string name="open_maps">ouvrir la carte</string>
+    <string name="maps_title">Visualisation d\'images des revues</string>
 </resources>
