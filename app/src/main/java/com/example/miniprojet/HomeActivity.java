@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.miniprojet.maps.MapsActivity;
 import com.example.miniprojet.restaurant.Restaurant;
 import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.example.miniprojet.restaurant.RestaurantService;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
