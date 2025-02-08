@@ -4,17 +4,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.miniprojet.R;
 import com.example.miniprojet.FetchState;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.miniprojet.PostState;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -49,13 +43,23 @@ public class ReviewService {
                                     reviews.add(review);
                                 }
                             }
-                            Log.d(TAG, "Reviews loaded successfully");
                             mainHandler.post(() -> state.onSuccess(reviews));
                         })
-                        .addOnFailureListener(e -> {
-                            Log.e(TAG, "Error occurred while fetching reviews", e);
-                            mainHandler.post(() -> state.onError(e));
-                        })
+                        .addOnFailureListener(e -> mainHandler.post(() -> state.onError(e)))
+        );
+    }
+
+    public void postReview(Review review, PostState<Review> state) {
+        Log.d(TAG, "Posting review for restaurantId: " + review.getRestaurantId());
+
+        executorService.execute(() ->
+                dataSource.collection("reviews")
+                        .add(review)
+                        .addOnSuccessListener(documentReference -> mainHandler.post(() -> {
+                            review.setId(documentReference.getId());
+                            state.onSuccess(review);
+                        }))
+                        .addOnFailureListener(e -> mainHandler.post(() -> state.onError(e)))
         );
     }
 
