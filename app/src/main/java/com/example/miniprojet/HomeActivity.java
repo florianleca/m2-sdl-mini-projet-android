@@ -38,6 +38,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         restaurantsContent = findViewById(R.id.restaurantsContent);
 
+        FloatingActionButton fabMap = findViewById(R.id.fab_maps);
+        fabMap.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
+            startActivity(intent);
+        });
+
         FirebaseApp.initializeApp(this);
         fetchAndPushRestaurantsInView(new RestaurantService(FirebaseFirestore.getInstance()));
     }

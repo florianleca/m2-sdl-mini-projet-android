@@ -9,7 +9,7 @@ material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
 jackson = "2.15.2"
-playServicesMaps = "19.0.0"
+osmdroid = "6.1.16"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -25,7 +25,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
 picasso = { group = "com.squareup.picasso", name = "picasso", version = "2.71828" }
 lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.36" }
-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+osmdroid = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
