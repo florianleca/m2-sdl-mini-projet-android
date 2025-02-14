@@ -16,7 +16,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.miniprojet.PostState;
+import com.example.miniprojet.FetchState;
 import com.example.miniprojet.R;
 import com.example.miniprojet.camera.CameraActivity;
 import com.example.miniprojet.restaurant.Restaurant;
@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class NewReviewActivity extends AppCompatActivity {
@@ -87,9 +88,9 @@ public class NewReviewActivity extends AppCompatActivity {
     }
 
     private void postReview(ReviewService reviewService) {
-        reviewService.postReview(review, new PostState<>() {
+        reviewService.postReview(review, new FetchState<>() {
             @Override
-            public void onSuccess(Review data) {
+            public void onSuccess(List<Review> data) {
                 Log.d(TAG, "Review posted successfully with ID: " + review.getId());
             }
 

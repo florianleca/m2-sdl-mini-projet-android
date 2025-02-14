@@ -5,11 +5,11 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.example.miniprojet.FetchState;
-import com.example.miniprojet.PostState;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,7 +49,7 @@ public class ReviewService {
         );
     }
 
-    public void postReview(Review review, PostState<Review> state) {
+    public void postReview(Review review, FetchState<Review> state) {
         Log.d(TAG, "Posting review for restaurantId: " + review.getRestaurantId());
 
         executorService.execute(() ->
@@ -57,7 +57,7 @@ public class ReviewService {
                         .add(review)
                         .addOnSuccessListener(documentReference -> mainHandler.post(() -> {
                             review.setId(documentReference.getId());
-                            state.onSuccess(review);
+                            state.onSuccess(Collections.singletonList(review));
                         }))
                         .addOnFailureListener(e -> mainHandler.post(() -> state.onError(e)))
         );
