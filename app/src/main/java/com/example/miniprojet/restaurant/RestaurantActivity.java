@@ -2,6 +2,8 @@ package com.example.miniprojet.restaurant;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +21,13 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.miniprojet.FetchState;
 import com.example.miniprojet.R;
 import com.example.miniprojet.reservation.ReservationPopUpBuilder;
+import com.example.miniprojet.review.NewReviewActivity;
 import com.example.miniprojet.review.Review;
 import com.example.miniprojet.review.ReviewService;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -45,6 +49,7 @@ public class RestaurantActivity extends AppCompatActivity {
         addRestaurantImg();
         ReservationPopUpBuilder.initReservationPopUp(this, restaurant);
         fetchReviews(new ReviewService(FirebaseFirestore.getInstance()));
+        initLeaveReviewListener();
     }
 
     private void addRestaurantImg() {
@@ -63,7 +68,7 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void fetchReviews(ReviewService service) {
-        service.fetchByRestaurant(restaurant.getId(),new FetchState<>() {
+        service.fetchByRestaurant(restaurant.getId(), new FetchState<>() {
             @Override
             public void onSuccess(List<Review> reviews) {
                 Log.d(TAG, "Reviews loaded successfully, count: " + reviews.size());
@@ -107,14 +112,33 @@ public class RestaurantActivity extends AppCompatActivity {
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            Picasso.get()
-                    .load(url)
-                    .error(R.drawable.ic_launcher_background)
-                    .into(imageView);
+            if (url.contains("user_photo_")) {
+                // User photo from local device
+                Picasso.get()
+                        .load(Uri.fromFile(new File(url)))
+                        .error(R.drawable.ic_launcher_background)
+                        .into(imageView);
+            } else {
+                // Internet image
+                Picasso.get()
+                        .load(url)
+                        .error(R.drawable.ic_launcher_background)
+                        .into(imageView);
+            }
 
             LinearLayout imageRow = view.findViewById(R.id.image_row);
             imageRow.addView(imageView);
         }
+    }
+
+    private void initLeaveReviewListener() {
+        View leaveReviewButton = findViewById(R.id.leaveReviewButton);
+        leaveReviewButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, NewReviewActivity.class);
+            intent.putExtra("restaurant", restaurant);
+            intent.putExtra("review", new Review());
+            startActivity(intent);
+        });
     }
 
 }

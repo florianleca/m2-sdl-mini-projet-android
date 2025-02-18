@@ -13,4 +13,8 @@
     <string name="a_quelle_heure">À quelle heure ?</string>
     <string name="pour_combien_de_personnes">Pour combien de personnes ?</string>
     <string name="colon">:</string>
+    <string name="redigezavis">Rédigez votre avis</string>
+    <string name="votrenom">Entrez votre nom</string>
+    <string name="prendrephoto">Prendre une photo</string>
+    <string name="valideravis">Valider l\'avis</string>
 </resources>
