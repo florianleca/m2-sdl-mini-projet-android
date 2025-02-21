@@ -24,12 +24,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private LinearLayout restaurantsContent;
+    private List<Restaurant> restaurantList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,10 @@ public class HomeActivity extends AppCompatActivity {
         restaurantsContent = findViewById(R.id.restaurantsContent);
 
         FloatingActionButton fabMap = findViewById(R.id.fab_maps);
+
         fabMap.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
+            intent.putExtra("restaurants", (Serializable) restaurantList);
             startActivity(intent);
         });
 
@@ -53,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<Restaurant> restaurants) {
                 Log.d(TAG, "Restaurants loaded successfully, count: " + restaurants.size());
+                restaurantList = restaurants;
                 pushRestaurantsInView(restaurants);
             }
 

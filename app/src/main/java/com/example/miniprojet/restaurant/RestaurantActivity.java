@@ -48,7 +48,7 @@ public class RestaurantActivity extends AppCompatActivity {
         initToolbar();
         addRestaurantImg();
         ReservationPopUpBuilder.initReservationPopUp(this, restaurant);
-        fetchReviews(new ReviewService(FirebaseFirestore.getInstance()));
+        fetchReviews(ReviewService.getInstance(FirebaseFirestore.getInstance()));
         initLeaveReviewListener();
     }
 

@@ -78,7 +78,7 @@ public class NewReviewActivity extends AppCompatActivity {
             review.setRestaurantId(restaurant.getId());
             review.setDate(new Date());
 
-            postReview(new ReviewService(FirebaseFirestore.getInstance()));
+            postReview(ReviewService.getInstance(FirebaseFirestore.getInstance()));
 
             Intent intent = new Intent(this, RestaurantActivity.class);
             intent.putExtra("restaurant", restaurant);

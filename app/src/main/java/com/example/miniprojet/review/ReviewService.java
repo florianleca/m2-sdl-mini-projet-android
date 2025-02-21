@@ -20,11 +20,19 @@ public class ReviewService {
     private final ExecutorService executorService;
     private final Handler mainHandler;
     private final FirebaseFirestore dataSource;
+    private static ReviewService instance;
 
-    public ReviewService(FirebaseFirestore dataSource) {
+    private ReviewService(FirebaseFirestore dataSource) {
         this.dataSource = dataSource;
         this.executorService = Executors.newSingleThreadExecutor();
         this.mainHandler = new Handler(Looper.getMainLooper());
+    }
+
+    public static synchronized ReviewService getInstance(FirebaseFirestore dataSource) {
+        if (instance == null) {
+            instance = new ReviewService(dataSource);
+        }
+        return instance;
     }
 
     public void fetchByRestaurant(String restaurantId, FetchState<Review> state) {
@@ -62,5 +70,28 @@ public class ReviewService {
                         .addOnFailureListener(e -> mainHandler.post(() -> state.onError(e)))
         );
     }
+
+    public void fetchReviewImagesByRestaurant(String restaurantId, FetchState<String> state) {
+        Log.d(TAG, "Fetching review images for restaurantId: " + restaurantId);
+
+        executorService.execute(() ->
+                dataSource.collection("reviews")
+                        .whereEqualTo("restaurantId", restaurantId)
+                        .get()
+                        .addOnSuccessListener(querySnapshot -> {
+                            List<String> imageUrls = new ArrayList<>();
+                            for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                                List<String> urls = (List<String>) doc.get("imagesUrl");
+                                if (urls != null && !urls.isEmpty()) {
+                                    imageUrls.addAll(urls);
+                                }
+                            }
+                            mainHandler.post(() -> state.onSuccess(imageUrls));
+                        })
+                        .addOnFailureListener(e -> mainHandler.post(() -> state.onError(e)))
+        );
+    }
+
+
 
 }

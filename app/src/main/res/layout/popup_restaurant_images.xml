@@ -1,0 +1,108 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        tools:context=".restaurant.RestaurantActivity">
+
+    <!-- Nom du restaurant -->
+    <TextView
+            android:id="@+id/dialog_restaurant_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Image du restaurant -->
+    <ImageView
+            android:id="@+id/dialog_restaurant_image"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toBottomOf="@id/dialog_restaurant_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Galerie d'images défilables horizontalement -->
+    <HorizontalScrollView
+            android:id="@+id/dialog_image_scroll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.35"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_restaurant_image"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout">
+
+        <LinearLayout
+                android:id="@+id/dialog_image_gallery"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+            <!-- Images des reviews ajoutées dynamiquement -->
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Boutons en bas -->
+    <!-- Boutons en bas -->
+    <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/dialog_image_scroll"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:weightSum="2"
+            android:paddingHorizontal="8dp" android:id="@+id/linearLayout">
+
+        <!-- Bouton Quitter -->
+        <Button
+                android:id="@+id/dialog_close_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/close"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_marginEnd="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textAlignment="center"/>
+
+        <!-- Bouton Voir le restaurant -->
+        <Button
+                android:id="@+id/dialog_see_restaurant_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/visit_restaurant"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/app_main"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textAlignment="center"/>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

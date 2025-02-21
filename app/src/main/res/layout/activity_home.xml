@@ -48,9 +48,13 @@
                 android:contentDescription="@string/open_maps"
                 app:backgroundTint="@color/app_main"
                 app:tint="@android:color/white"
-                app:maxImageSize="60dp"
+                app:maxImageSize="40dp"
+                app:fabSize="normal"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MaterialComponents.FloatingActionButton"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="50dp"/>
+                android:layout_margin="40dp"
+                android:elevation="8dp"
+                android:translationZ="12dp"/>
 
     </FrameLayout>
 
