@@ -15,19 +15,23 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.miniprojet.maps.MapsActivity;
 import com.example.miniprojet.restaurant.Restaurant;
 import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.example.miniprojet.restaurant.RestaurantService;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private LinearLayout restaurantsContent;
+    private List<Restaurant> restaurantList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,14 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
         restaurantsContent = findViewById(R.id.restaurantsContent);
+
+        FloatingActionButton fabMap = findViewById(R.id.fab_maps);
+
+        fabMap.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
+            intent.putExtra("restaurants", (Serializable) restaurantList);
+            startActivity(intent);
+        });
 
         FirebaseApp.initializeApp(this);
         fetchAndPushRestaurantsInView(new RestaurantService(FirebaseFirestore.getInstance()));
@@ -45,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<Restaurant> restaurants) {
                 Log.d(TAG, "Restaurants loaded successfully, count: " + restaurants.size());
+                restaurantList = restaurants;
                 pushRestaurantsInView(restaurants);
             }
 
