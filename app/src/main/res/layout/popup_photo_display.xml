@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
+    <com.example.miniprojet.review.StickerView
         android:id="@+id/modal_image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +14,20 @@
         android:contentDescription="@string/visualisation_de_l_image"
         android:paddingBottom="16dp"
         android:scaleType="fitCenter" />
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal">
+
+        <LinearLayout
+                android:id="@+id/stickers_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

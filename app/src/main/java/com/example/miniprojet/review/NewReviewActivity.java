@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +30,8 @@ import com.example.miniprojet.restaurant.Restaurant;
 import com.example.miniprojet.restaurant.RestaurantActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -173,7 +173,7 @@ public class NewReviewActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_photo_display);
 
-        ImageView modalImageView = dialog.findViewById(R.id.modal_image_view);
+        StickerView modalImageView = dialog.findViewById(R.id.modal_image_view);
         Button supprimerButton = dialog.findViewById(R.id.supprimer_button);
         Button flouterButton = dialog.findViewById(R.id.flouter_button);
         Button assombrirButton = dialog.findViewById(R.id.assombrir_button);
@@ -182,6 +182,23 @@ public class NewReviewActivity extends AppCompatActivity {
 
         modalImageView.setImageBitmap(bitmap);
 
+        LinearLayout stickersContainer = dialog.findViewById(R.id.stickers_container);
+        int[] stickerResources = {R.drawable.sticker0, R.drawable.sticker1, R.drawable.sticker2, R.drawable.sticker3,
+                R.drawable.sticker4, R.drawable.sticker5, R.drawable.sticker6, R.drawable.sticker7};
+
+        for (int resourceId : stickerResources) {
+            ImageView stickerView = new ImageView(this);
+            stickerView.setImageResource(resourceId);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(100, 100);
+            params.setMargins(8, 0, 8, 0);
+            stickerView.setLayoutParams(params);
+            stickersContainer.addView(stickerView);
+
+            stickerView.setOnClickListener(v -> {
+                Bitmap stickerBitmap = BitmapFactory.decodeResource(getResources(), resourceId);
+                modalImageView.addSticker(stickerBitmap);
+            });
+        }
         disableButton(reinitialiserButton);
         reinitialiserButton.setOnClickListener(v -> {
             modalImageView.setImageBitmap(snapshot);
@@ -199,8 +216,25 @@ public class NewReviewActivity extends AppCompatActivity {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            currentImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            modalImageView.setDrawingCacheEnabled(true);
+            modalImageView.buildDrawingCache();
+
+            Bitmap finalBitmap = Bitmap.createBitmap(modalImageView.getDrawingCache());
+
+            modalImageView.setDrawingCacheEnabled(false);
+
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+            try {
+                outputStream.flush();
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             review.addImage(file.getAbsolutePath());
+            modalImageView.getStickerInfos().clear();
+            modalImageView.setImageBitmap(finalBitmap);
             loadImages();
             dialog.dismiss();
         });
@@ -245,6 +279,7 @@ public class NewReviewActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
 
     private void disableButton(Button button) {
         button.setEnabled(false);
