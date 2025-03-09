@@ -58,7 +58,7 @@ public class MapsRestaurantImagesPopUp {
                 @Override
                 public void onSuccess(List<String> imageUrls) {
                     Log.i(TAG, "Images récupérées : " + imageUrls.size());
-                    imageUrls = imageUrls.stream().filter(imagePath -> imagePath.contains("/storage/emulated/"))
+                    imageUrls = imageUrls.stream().filter(imagePath -> imagePath.contains("/com.example.miniprojet/"))
                             .collect(Collectors.toList());
                     if (!imageUrls.isEmpty()) {
                         for (String imagePath : imageUrls) {
