@@ -13,7 +13,7 @@
     <string name="a_quelle_heure">À quelle heure ?</string>
     <string name="pour_combien_de_personnes">Pour combien de personnes ?</string>
     <string name="colon">:</string>
-    <string name="open_maps">ouvrir la carte</string>
+    <string name="open_maps">Ouvrir la carte</string>
     <string name="maps_title">Visualisation d\'images des revues</string>
     <string name="redigezavis">Rédigez votre avis</string>
     <string name="votrenom">Entrez votre nom</string>
@@ -22,4 +22,10 @@
     <string name="close">Fermer\n</string>
     <string name="visit_restaurant">Voir le restaurant</string>
     <string name="no_review_with_text">Aucune revue avec image disponible.</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="visualisation_de_l_image">Visualisation de l\'image</string>
+    <string name="flouter">Flouter</string>
+    <string name="assombrir">Assombrir</string>
+    <string name="reinitialiser">Réinitialiser</string>
+    <string name="enregistrer">Enregistrer</string>
 </resources>

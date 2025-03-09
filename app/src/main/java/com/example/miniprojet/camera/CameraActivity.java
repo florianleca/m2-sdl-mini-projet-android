@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -459,13 +461,22 @@ public class CameraActivity extends AppCompatActivity {
         File file = null;
         FileOutputStream output = null;
         try {
-            // Créer un fichier temporaire
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            bitmap = Bitmap.createBitmap(
+                    bitmap,
+                    0, 0,
+                    bitmap.getWidth(),
+                    bitmap.getHeight(),
+                    matrix,
+                    true);
+
             file = File.createTempFile("user_photo_", ".jpg", getExternalCacheDir());
             output = new FileOutputStream(file);
-
-            // Écrire les données de l'image dans le fichier
-            output.write(bytes);
-            Log.d(TAG, "Saved picture: " + file.getAbsolutePath());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+            bitmap.recycle();
         } catch (IOException e) {
             Log.e(TAG, "Error while saving picture", e);
         } finally {
@@ -473,7 +484,7 @@ public class CameraActivity extends AppCompatActivity {
                 try {
                     output.close();
                 } catch (IOException e) {
-                    Log.e(TAG, "Error while saving picture", e);
+                    Log.e(TAG, "Error while closing output stream", e);
                 }
             }
         }

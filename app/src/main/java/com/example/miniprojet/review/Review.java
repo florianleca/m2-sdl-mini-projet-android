@@ -23,4 +23,8 @@ public class Review implements Serializable {
         imagesUrl.add(imageUrl);
     }
 
+    public void removeImage(String imageUrl) {
+        imagesUrl.remove(imageUrl);
+    }
+
 }
