@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -173,6 +174,16 @@ public class NewReviewActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.popup_photo_display);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        int dialogWidth = (int) (screenWidth * 0.8);
+        int dialogHeight = (int) (screenHeight * 0.8);
+
+        dialog.getWindow().setLayout(dialogWidth, dialogHeight);
+
         StickerView modalImageView = dialog.findViewById(R.id.modal_image_view);
         Button supprimerButton = dialog.findViewById(R.id.supprimer_button);
         Button flouterButton = dialog.findViewById(R.id.flouter_button);
@@ -197,6 +208,9 @@ public class NewReviewActivity extends AppCompatActivity {
             stickerView.setOnClickListener(v -> {
                 Bitmap stickerBitmap = BitmapFactory.decodeResource(getResources(), resourceId);
                 modalImageView.addSticker(stickerBitmap);
+                if(!reinitialiserButton.isEnabled()) {
+                    enableButton(reinitialiserButton);
+                }
             });
         }
         disableButton(reinitialiserButton);
@@ -204,6 +218,7 @@ public class NewReviewActivity extends AppCompatActivity {
             modalImageView.setImageBitmap(snapshot);
             currentImageBitmap = snapshot;
             disableButton(reinitialiserButton);
+            modalImageView.clearStickers();
         });
 
         enregistrerButton.setOnClickListener(v -> {

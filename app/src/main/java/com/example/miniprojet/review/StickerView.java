@@ -100,6 +100,11 @@ public class StickerView extends AppCompatImageView implements View.OnTouchListe
         return pts[0] >= 0 && pts[0] < info.getBitmap().getWidth() && pts[1] >= 0 && pts[1] < info.getBitmap().getHeight();
     }
 
+    public void clearStickers() {
+        stickerInfos.clear();
+        invalidate();
+    }
+
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
