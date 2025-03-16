@@ -16,7 +16,7 @@ public class Restaurant implements Serializable {
     private String imageUrl;
 
     public float getRating() {
-        return (float) (1 + Math.random() * (5 - 1));
+        return (float) (2.5 + Math.random() * (5 - 2.5));
     }
 
     @Override
