@@ -3,6 +3,7 @@ package com.example.miniprojet.maps;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,7 +21,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MapsRestaurantImagesPopUp {
     private static final String TAG = MapsRestaurantImagesPopUp.class.getSimpleName();
@@ -58,15 +58,24 @@ public class MapsRestaurantImagesPopUp {
                 @Override
                 public void onSuccess(List<String> imageUrls) {
                     Log.i(TAG, "Images récupérées : " + imageUrls.size());
-                    imageUrls = imageUrls.stream().filter(imagePath -> imagePath.contains("/com.example.miniprojet/"))
-                            .collect(Collectors.toList());
                     if (!imageUrls.isEmpty()) {
                         for (String imagePath : imageUrls) {
                             Log.i(TAG, "Chargement de l'image : " + imagePath);
                             ImageView imageView = new ImageView(context);
-                            Picasso.get().load(new File(imagePath))
-                                    .error(R.drawable.ic_launcher_background)
-                                    .into(imageView);
+
+                            if (imagePath.contains("user_photo_")) {
+                                // User photo from local device
+                                Picasso.get()
+                                        .load(Uri.fromFile(new File(imagePath)))
+                                        .error(R.drawable.ic_launcher_background)
+                                        .into(imageView);
+                            } else {
+                                // Internet image
+                                Picasso.get()
+                                        .load(imagePath)
+                                        .error(R.drawable.ic_launcher_background)
+                                        .into(imageView);
+                            }
 
                             int imageWidth = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.35);
                             int imageHeight = (int) (imageWidth * 0.6);
