@@ -74,7 +74,11 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_review" />
+        app:layout_constraintTop_toBottomOf="@id/edit_review"
+        app:icon="@drawable/baseline_add_a_photo_24"
+        app:iconGravity="start"
+        app:iconSize="20dp"
+        app:iconTint="@color/white"/>
 
     <HorizontalScrollView
         android:id="@+id/image_scroll"
@@ -105,7 +109,11 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_scroll" />
+        app:layout_constraintTop_toBottomOf="@id/image_scroll"
+        app:icon="@drawable/baseline_check_24"
+        app:iconGravity="start"
+        app:iconSize="20dp"
+        app:iconTint="@color/white"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
