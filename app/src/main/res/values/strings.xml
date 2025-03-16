@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mini Projet</string>
+    <string name="app_name">ReviewEat</string>
     <string name="restau_img_desc">restau img</string>
     <string name="restaurant_image">Restaurant main image</string>
     <string name="reserver">Réserver</string>
