@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.miniprojet.FetchState;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +42,7 @@ public class ReviewService {
         executorService.execute(() ->
                 dataSource.collection("reviews")
                         .whereEqualTo("restaurantId", restaurantId)
+                        .orderBy("date", Query.Direction.DESCENDING)
                         .get()
                         .addOnSuccessListener(querySnapshot -> {
                             List<Review> reviews = new ArrayList<>();
